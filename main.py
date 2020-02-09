@@ -25,18 +25,16 @@ class Game:
 
         self.asteroides_en_pantalla = 20
         self.new_asteroide = FPS//2
-        self.crer_nuevo_asteroide = FPS*6
+        self.crear_asteroid = FPS*6
+
  
-    def crear_asteroides(self, dt):
-        
+    def crear_asteroides(self, dt):       
         self.new_asteroide += dt
-        if  self.new_asteroide >= self.crer_nuevo_asteroide:
+        if  self.new_asteroide >= self.crear_asteroid:
             self.asteroide = Asteroide(randint(780, 840), randint(-10, 550))
             self.asteroide.speed = (randint(1, 3))
-
             self.asteroidesGroup.add(self.asteroide)
-
-            self.new_asteroide = 0  # Se reinicia a cero para que  los obstaculos no salgan todos de golpe
+            self.new_asteroide = 0  # Se reinicia a cero para que  los obstaculos no salgan de golpe
 
     def gameOver(self):
         pg.quit()
@@ -64,6 +62,12 @@ class Game:
         while True:
             dt = self.clock.tick(FPS)
             self.handleEvents()
+            
+            self.player.comprobar_colision(self.asteroidesGroup)
+                
+
+            if self.player.vidas == 0:
+                self.gameOver()
 
             self.screen.blit( self.background_image, (0,0))
         
