@@ -3,38 +3,44 @@ from pygame.locals import *
 import random
 from random import choice, randint
 
-puntos = 0
 
 class Nave(pg.sprite.Sprite):
+    clock = pg.time.Clock()
     img_nave = 'nave.png'
     speed = 5
     FPS = 60
     vidas = 10
-
+    
+    
     def __init__(self, x = 0, y = 270):
+        
         pg.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
-
-        self.image = pg.image.load('resources/images/{}'.format(self.img_nave)).convert_alpha()
+        
+        self.nave_normal = pg.image.load('resources/images/{}'.format(self.img_nave)).convert_alpha()
+        self.image = self.nave_normal
+        #self.sound_explo = pg.mixer.Sound('resources/sounds/Explo.wav')
+        self.frames = []  
+        self.explotar = False       
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.w = self.rect.w
+        self.w = self.rect.w 
         self.h = self.rect.h
-        self.frames = []
         self.index = 0
         self.how_many = 0
-        self.animation_time = self.FPS//2     
+        self.animation_time = 64  
         self.current_time = 0
-        
+        self.loadFrames()
+
     def go_up(self):
        self.rect.y = max(0, self.rect.y - self.speed)
 
     def go_down(self):
-       self.rect.y = min(self.rect.y + self.speed, 600-self.w)
+       self.rect.y = min(self.rect.y + self.speed, 535)
 
-    def loadFrames(self):
+    def loadFrames(self): 
         self.w = 128
         self.h = 128
         self.sprite_sheet = pg.image.load('resources/images/bomb-sprite.png').convert_alpha()
@@ -48,39 +54,45 @@ class Nave(pg.sprite.Sprite):
                 self.frames.append(img_explo)
         self.how_many = len(self.frames)
         self.image = self.frames[self.index]
-        
+    
 
     def comprobar_colision(self,group):
         colisiones = pg.sprite.spritecollide(self,group,True)
-        num_candidatos = len(colisiones)
-        if num_candidatos > 0:
-            self.vidas -= 1
-            print('Quedan', self.vidas, 'vidas')
-            return num_candidatos
+        self.num_candidatos = len(colisiones)
+        if self.num_candidatos > 0: 
+            self.vidas -= 1   
+            self.explotar = True
+
+
+    def update(self,dt):
     
+        if not  self.explotar :
+            self.image = self.nave_normal
 
-    '''def update(self,dt):
-
+        else:             
             self.current_time += dt
-            if self.current_time > self.animation_time:
-                self.current_time = 0
-                self.index += 1
-                if self.index >= self.how_many:
+            if self.current_time >= self.animation_time:   
+                if self.index < len(self.frames) -1:                  
+                    self.index += 1    
+                else:
+                    self.explotar = False
+                    self.current_time = 0
                     self.index = 0
-                self.image = self.frames [self.index]'''
+            self.image = self.frames[self.index]
 
 
-class Asteroide(pg.sprite.Sprite):
-    
-    imgs_asteroides =('asteroide_60.png', 'asteroide_200.png', 'satelite.png', 'saturno.png', 'astronauta.png')
+class Asteroide(pg.sprite.Sprite):    
+    puntuacion = 0
+    imgs_asteroides =('asteroide_60.png', 'satelite.png', 'saturno.png', 'astronauta.png')
 
-    def __init__(self, x = randint(780, 800), y = randint(-10,550), w = 0, h = 0, speed = 5):
+    def __init__(self, x = randint(780, 800), y = randint(10,550), w = 0, h = 0, speed = 1):
         pg.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
         self.w = w
         self.h = h
         self.speed = speed  
+        
         
         self.asteroids = []     
         for img in self.imgs_asteroides:
@@ -92,12 +104,10 @@ class Asteroide(pg.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.w = self.rect.w
-        self.h = self.rect.h      
+        self.h = self.rect.h    
 
     def update(self, dt):
         self.rect.x -= self.speed
-        if self.rect.x <= -170: 
+        if self.rect.x <= -self.rect.w:                      
             self.kill() 
             del self
-            
-
