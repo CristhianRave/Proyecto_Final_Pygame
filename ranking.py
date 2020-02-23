@@ -3,9 +3,7 @@ from pygame.locals import *
 import sqlite3
 import sys
 
-VERDE = (30, 186, 22)
 WHITE = (255, 255, 255)
-NEGRO = (0, 0, 0)
 RED = (255, 0, 0)
 
 

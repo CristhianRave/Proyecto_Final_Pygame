@@ -17,7 +17,7 @@
 
 3. Iniciar el juego:
 
-    Localizar el archivo menu_juego.py y ejecutarlo. 
+    Localizar el archivo main.py y ejecutarlo. 
 
 
     # Mas info -> menu del juego.

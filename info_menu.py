@@ -24,7 +24,6 @@ class info_Menu():
         self.tamaño_letra = pg.font.Font('resources/fonts/PressStart.ttf', 16)
      
 
-
     def historia_juego(self):
 
         self.texto1 = self.tamaño_titulo.render('Historia ', True, RED)

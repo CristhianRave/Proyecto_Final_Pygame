@@ -92,8 +92,7 @@ class Asteroide(pg.sprite.Sprite):
         self.y = y
         self.w = w
         self.h = h
-        self.speed = speed  
-        
+        self.speed = speed        
         
         self.asteroids = []     
         for img in self.imgs_asteroides:
