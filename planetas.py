@@ -1,5 +1,6 @@
 import pygame as pg
 from pygame.locals import *
+import sys
 
 
 class Planeta(pg.sprite.Sprite):  
@@ -52,14 +53,15 @@ class Nave_rotate(pg.sprite.Sprite):
         self.x = x
         self.y = y
         self.speed = speed
- 
-        self.image = pg.image.load('resources/images/{}'.format(self.imgs_nave)).convert_alpha()
+        self.angulo = 0                    
+
+        self.img = pg.image.load('resources/images/{}'.format(self.imgs_nave)).convert_alpha()
+        self.image = pg.transform.rotate(self.img, self.angulo)
         self.rect = self.image.get_rect()  
         self.rect.x = x
         self.rect.y = y
         self.animation_time = self.FPS//2 
         self.current_time = 0
-        self.angulo = 0                    
 
 
     def muestra_texto(self):
@@ -71,19 +73,17 @@ class Nave_rotate(pg.sprite.Sprite):
         self.screen.blit(self.ganaste2,(120, 450))
  
 
-    def rotar (self):
-        self.imagen = pg.transform.rotate(self.image, self.angulo)
-        if self.rect.x > 400:
-            self.angulo += 1 
-        if self.angulo > 180:
-            self.angulo = 180
-        
+
+    
         self.screen.blit(self.imagen, self.rect)
 
     def update(self, dt):
         self.current_time += dt 
         self.rect.x += 1  
-        self.rotar()
+        if self.rect.x > 400:
+            self.angulo += 1 
+        if self.angulo > 180:
+            self.angulo = 180
 
         if self.current_time > self.animation_time: 
             self.current_time = 0      
@@ -92,4 +92,24 @@ class Nave_rotate(pg.sprite.Sprite):
             self.rect.x -= 1
             self.speed = 0            
             self.muestra_texto()
-        
+
+
+
+    def handleEvents(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == KEYDOWN and event.key == K_ESCAPE:
+                self.bucle_info = False
+
+    def mainloop_info(self):
+        self.bucle_info = True
+        while self.bucle_info:
+            self.handleEvents()
+
+
+if __name__ == '__main__':
+    nave = Nave_rotate()
+    nave.mainloop_info()
+
