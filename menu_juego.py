@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 from main import *
 from info_menu import *
+from ranking import *
 
 
 WHITE = (255, 255, 255)
@@ -12,13 +13,14 @@ class Menu():
     def __init__(self):
 
         pg.font.init()
-
+        pg.mixer.init()
         self.screen = pg.display.set_mode((800,600))
-        self.display = pg.display.set_caption ('Spaceships')
-        self.background_image = pg.image.load('resources/images/fondo.png').convert()
+        self.display = pg.display.set_caption ('The quest')
+        self.background_image = pg.image.load('resources/images/fondo4.jpg').convert()
         self.font = pg.font.Font('resources/fonts/PressStart.ttf', 32)
-
-
+        pg.mixer.music.load('resources/sounds/Different Heaven - Nekozilla .mp3')
+        pg.mixer.music.play(5,0)
+ 
         self.opciones = [
 
             ('· Historia del juego', historia_juego),
@@ -46,9 +48,8 @@ class Menu():
                 self.seleccionado += 1
             elif tecla_pulsada[K_RETURN]:
 
-                opcion_menu, funcion = self.opciones[self.seleccionado]
-                print('{}'.format(opcion_menu))
-                funcion()
+                opcion_menu, opcion_elejida = self.opciones[self.seleccionado]
+                opcion_elejida()
 
         if self.seleccionado < 0:
             self.seleccionado = 0
@@ -60,13 +61,12 @@ class Menu():
 
     def mensaje_opciones(self, pantalla):
 
-        total = self.total
         indice = 0
         self.altura_opcion = 60
         x = 100
         y = 140
 
-        for (opcion_menu, funcion) in self.opciones:
+        for (opcion_menu, opcion_elejida) in self.opciones:
             if indice == self.seleccionado:
                 color = RED
             else:
@@ -112,7 +112,8 @@ def instrucciones():
     info_menu.instrucciones()
 
 def ranking():
-    print('ranking ')
+    ranking = Ranking()
+    ranking.ver_base_datos()
 
 
 def creditos():

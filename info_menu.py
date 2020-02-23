@@ -2,6 +2,7 @@ import pygame as  pg
 from pygame.locals import *
 import sys
 
+
 RED = (229, 9, 9)
 WHITE = (255, 255, 255)
 
@@ -14,8 +15,8 @@ class info_Menu():
 
         pg.font.init()
         self.screen = pg.display.set_mode((800,600))
-        pg.display.set_caption ('Spaceships')
-        self.background_image = pg.image.load('resources/images/fondo.png').convert()
+        pg.display.set_caption ('The Quest')
+        self.background_image = pg.image.load('resources/images/fondo8.jpg').convert()
         self.screen.blit(self.background_image, (0, 0))
 
         self.tamaño_titulo_pequeño = pg.font.Font('resources/fonts/PressStart.ttf', 26)
@@ -26,7 +27,7 @@ class info_Menu():
 
     def historia_juego(self):
 
-        self.texto1 = self.tamaño_titulo.render('Historia ', True, WHITE)
+        self.texto1 = self.tamaño_titulo.render('Historia ', True, RED)
         self.texto2 = self.tamaño_letra.render('La búsqueda comienza en un planeta tierra  ', True, WHITE)
         self.texto3 = self.tamaño_letra.render('moribundo por el cambio climático. Partiremos  ', True, WHITE)
         self.texto4 = self.tamaño_letra.render('a la búsqueda de un planeta compatible con  ', True, WHITE)
@@ -50,8 +51,8 @@ class info_Menu():
 
     def instrucciones(self):
 
-        self.texto1 = self.tamaño_titulo.render('Intrucciones', True, WHITE)
-        self.texto2 = self.tamaño_letra.render('Utiliza las teclas arriba (↑) o abajo (↓) ', True, WHITE)
+        self.texto1 = self.tamaño_titulo.render('Intrucciones', True, RED)
+        self.texto2 = self.tamaño_letra.render('Utiliza las teclas arriba ↑ o abajo ↓ ', True, WHITE)
         self.texto3 = self.tamaño_letra.render('para desplazar la nave. ', True, WHITE)
         self.texto4 = self.tamaño_letra.render('Consta de 3 niveles los cuales iran', True, WHITE)
         self.texto5 = self.tamaño_letra.render('aumentando de dificultad por la', True, WHITE)

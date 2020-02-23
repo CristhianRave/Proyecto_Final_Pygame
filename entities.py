@@ -5,22 +5,21 @@ from random import choice, randint
 
 
 class Nave(pg.sprite.Sprite):
-    clock = pg.time.Clock()
     img_nave = 'nave.png'
     speed = 5
     FPS = 60
-    vidas = 10
+    vidas = 5
     
     
     def __init__(self, x = 0, y = 270):
-        
+        pg.mixer.init()
         pg.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
         
         self.nave_normal = pg.image.load('resources/images/{}'.format(self.img_nave)).convert_alpha()
         self.image = self.nave_normal
-        #self.sound_explo = pg.mixer.Sound('resources/sounds/Explo.wav')
+        pg.mixer.music.load('resources/sounds/Explo.wav')
         self.frames = []  
         self.explotar = False       
         self.rect = self.image.get_rect()
@@ -30,7 +29,7 @@ class Nave(pg.sprite.Sprite):
         self.h = self.rect.h
         self.index = 0
         self.how_many = 0
-        self.animation_time = 64  
+        self.animation_time = self.FPS*2 
         self.current_time = 0
         self.loadFrames()
 
@@ -62,6 +61,7 @@ class Nave(pg.sprite.Sprite):
         if self.num_candidatos > 0: 
             self.vidas -= 1   
             self.explotar = True
+            pg.mixer.music.play()
 
 
     def update(self,dt):
@@ -71,18 +71,19 @@ class Nave(pg.sprite.Sprite):
 
         else:             
             self.current_time += dt
-            if self.current_time >= self.animation_time:   
-                if self.index < len(self.frames) -1:                  
-                    self.index += 1    
+
+            if self.current_time > self.animation_time :   
+                if self.index < self.how_many -1:                  
+                    self.index += 1   
                 else:
                     self.explotar = False
                     self.current_time = 0
                     self.index = 0
-            self.image = self.frames[self.index]
+            self.image = self.frames[self.index-1] 
 
 
 class Asteroide(pg.sprite.Sprite):    
-    puntuacion = 0
+
     imgs_asteroides =('asteroide_60.png', 'satelite.png', 'saturno.png', 'astronauta.png')
 
     def __init__(self, x = randint(780, 800), y = randint(10,550), w = 0, h = 0, speed = 1):

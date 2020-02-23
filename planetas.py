@@ -5,11 +5,11 @@ from pygame.locals import *
 class Planeta(pg.sprite.Sprite):  
     clock = pg.time.Clock()
     FPS = 60  
-    imgs_planeta = ('luna.png')
+    imgs_planeta = ('planeta.png')
 
     def __init__(self, x = 800, y = 0,  speed = 1):
         pg.sprite.Sprite.__init__(self)
-
+        
         self.x = x
         self.y = y
         self.speed = speed
@@ -32,15 +32,20 @@ class Planeta(pg.sprite.Sprite):
 
 
 RED = (255, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (30, 186, 22)
+
 class Nave_rotate(pg.sprite.Sprite):  
-    clock = pg.time.Clock()
+
     FPS = 60  
     imgs_nave = ('nave.png')
 
     def __init__(self, x = 0, y = 270,  speed = 1):
+
         pg.font.init()
         pg.sprite.Sprite.__init__(self)
         self.fonty = pg.font.Font('resources/fonts/PressStart.ttf', 52)
+        self.font = pg.font.Font('resources/fonts/PressStart.ttf', 22)
   
         self.screen = pg.display.set_mode((800,600))
 
@@ -54,12 +59,17 @@ class Nave_rotate(pg.sprite.Sprite):
         self.rect.y = y
         self.animation_time = self.FPS//2 
         self.current_time = 0
-        self.angulo = 0
+        self.angulo = 0                    
 
 
     def muestra_texto(self):
-        self.ganaste = self.fonty.render('Ganaste', True, RED)
-        self.screen.blit(self.ganaste,(200,250))
+        self.ganaste = self.fonty.render('Ganaste!!', True, RED)
+        self.ganaste1 = self.font.render('Preciona "Space" para guardar', True, GREEN)
+        self.ganaste2 = self.font.render('puntaje y volver al Menu.', True, GREEN)
+        self.screen.blit(self.ganaste,(180, 150))
+        self.screen.blit(self.ganaste1,(100, 400))
+        self.screen.blit(self.ganaste2,(120, 450))
+ 
 
     def rotar (self):
         self.imagen = pg.transform.rotate(self.image, self.angulo)
