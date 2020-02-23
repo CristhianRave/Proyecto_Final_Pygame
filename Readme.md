@@ -8,16 +8,18 @@
 
     Activarlo:
         "Nombre del entorno virtual"\Scripts\activate
-```
+    ```
 
 2. Instalar las dependencias del fichero requirements.txt
-```
+
+    ```
     pip install -r requirements
-```
+    ```
 
 3. Iniciar el juego:
-```
+
+    ```
     Localizar el archivo main.py y ejecutarlo. 
-```
+    ```
 
 # Mas info -> menu del juego.
