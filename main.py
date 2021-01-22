@@ -18,7 +18,7 @@ class Menu():
         self.display = pg.display.set_caption ('The quest')
         self.background_image = pg.image.load('resources/images/fondo4.jpg').convert()
         self.font = pg.font.Font('resources/fonts/PressStart.ttf', 32)
-        pg.mixer.music.load('resources/sounds/Different Heaven - Nekozilla .mp3')
+        pg.mixer.music.load('resources/sounds/Different Heaven - Nekozilla (1).mp3')
         pg.mixer.music.play()
  
         self.opciones = [
