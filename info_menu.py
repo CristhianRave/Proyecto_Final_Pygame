@@ -80,7 +80,6 @@ class info_Menu():
         self.texto4 = self.tamaño_letra.render('Creado por: Cristhian David Rave Osorio', True, WHITE)
         
         self.texto5 = self.tamaño_letra.render('Fecha: 23-02-2020', True, WHITE)
-        self.texto6 = self.tamaño_letra.render('Profesor: Ramón Maldonado', True, WHITE)
         self.texto7 = self.tamaño_letra.render('Menu pulsa "Escape"', True, RED)
 
         self.screen.blit(self.texto, (130, 80))
@@ -88,8 +87,7 @@ class info_Menu():
         self.screen.blit(self.texto2, (260, 160))
         self.screen.blit(self.texto3, (50, 300))       
         self.screen.blit(self.texto4, (50, 340))     
-        self.screen.blit(self.texto5, (50, 380))
-        self.screen.blit(self.texto6, (50, 420))       
+        self.screen.blit(self.texto5, (50, 380))     
         self.screen.blit(self.texto7, (50, 550))
 
         pg.display.flip()                
